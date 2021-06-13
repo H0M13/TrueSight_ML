@@ -2,13 +2,17 @@
 Created on Sun May  2 12:13:52 2021
 
 @author: Harry Jackson
+
+Functions and code to score prediction performance and calculate node weightings using RMSE
 """
 #Imports
 import pandas as pd
 import numpy as np
 
+
+
 """
-This function reformats the inputted predictions and actuals from wide format to long 
+Reformats the inputted predictions and actuals from wide format to long 
 
 Args:
     predictions (dataframe): This is the nodes predictions for the labels by content hash in the format -[content_hash, node_identifier, adult, suggestive, 
@@ -33,8 +37,10 @@ def wide_to_long(predictions, actuals):
                             value_name = "actual")
     return(long_predictions, long_actuals)
 
+
+
 """
-This function calculates the RMSE of a node. The error is the difference betweent the prediction and the actual values by label.
+Calculates the RMSE of a node. The error is the difference betweent the prediction and the actual values by label.
 To calculate this we square the individual errors, take the mean by node/label, then square root the result.
 This will give us our error %, by taking this from 100 we can thus calculate our accuracy.
 This value does not need standardising as the max of a label is 100 and the min is 0.
@@ -55,8 +61,10 @@ def calculate_RMSE(errors):
     results['accuracy'] = 100 - results['RMSE'] 
     return(results.reset_index())
 
+
+
 """
-This function takes the accuracy scores by node and label and will calculate the weighting each node should recieve by normalising these accuracies.
+Takes the accuracy scores by node and label and will calculate the weighting each node should recieve by normalising these accuracies.
 
 
 Args:
@@ -73,6 +81,8 @@ def agg_normalise(results):
     weights['weighting'] = weights['accuracy']/weights['total']
     weights = weights.drop(['total'], axis = 1)
     return(weights)
+    
+    
     
 #Load in training and testing data
 prediction_data = pd.read_csv('training_data.csv',dtype={0:'str',1:'str',2:np.float64,3:np.float64,4:np.float64,5:np.float64,6:np.float64})
