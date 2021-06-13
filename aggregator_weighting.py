@@ -87,8 +87,8 @@ def agg_normalise(results):
 #Main script    
     
 #Load in training and testing data
-prediction_data = pd.read_csv('prediction_data.csv',dtype={0:'str',1:'str',2:np.float64,3:np.float64,4:np.float64,5:np.float64,6:np.float64})
-actual_data = pd.read_csv('actual_data.csv',dtype={0:'str',1:np.float64,2:np.float64,3:np.float64,4:np.float64,5:np.float64})
+prediction_data = pd.read_csv('predictions_data.csv',dtype={0:'str',1:'str',2:np.float64,3:np.float64,4:np.float64,5:np.float64,6:np.float64})
+actual_data = pd.read_csv('actuals_data.csv',dtype={0:'str',1:np.float64,2:np.float64,3:np.float64,4:np.float64,5:np.float64})
 
 #Pivot data to long format
 long_prediction, long_actual = wide_to_long(prediction_data, actual_data)
